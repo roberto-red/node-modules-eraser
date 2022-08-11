@@ -1,21 +1,21 @@
-# Find node modules
+# Node modules folder eraser
 
-## ¿Para qué es este programa?
+## Purpose
 
-Para buscar en tu ordenador los directorios `node_modules/` y borrarlos. Antes de borrar un directorio `node_modules/` el programa te preguntará si quieres borrarlo.
+This Node script searches your computer for the `node_modules/` directories to delete them. Before deleting a `node_modules/` directory the program will ask you if you want to do so.
 
-## ¿Cómo usar este programa?
+## How is it used?
 
-Ejecuta `index.js` con la ruta donde quieras buscar, por ejemplo:
+Run `index.js` with the path where you want to search, for example:
 
 ```bash
-node index ./
+node index.js ./
 ```
 
 ```bash
-node index ./projects/
+node index.js ./projects/
 ```
 
 ```bash
-node index ../../../
+node index.js ../../../
 ```
