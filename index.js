@@ -7,12 +7,13 @@ const targetBaseRelPath = process.argv[2] || '.';
 
 const consoleColors = {
   delete: '\x1b[32m',
+  error: '\x1b[31m',
   keys: '\x1b[33m',
   feedback: '\x1b[37m'
 };
 
 const findFolderRecursive = (path, result = []) => {
-  if (fs.existsSync(path)) {
+  try {
     fs.readdirSync(path).forEach(file => {
       const currentPath = nodePath.join(path, file);
       if (file === 'node_modules') {
@@ -21,6 +22,20 @@ const findFolderRecursive = (path, result = []) => {
         findFolderRecursive(currentPath, result);
       }
     });
+  } catch (error) {
+    const {code, path} = error;
+    if (code === 'ENOENT') {
+      console.log(consoleColors.error
+        + `Folder ${path} doesn't exist`
+        + consoleColors.feedback
+      );
+    }
+    if (code === 'EPERM') {
+      console.log(consoleColors.error
+        + `Could not access folder ${path}; check permissions and try again`
+        + consoleColors.feedback
+      );
+    }
   }
   return result;
 };
