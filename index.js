@@ -1,4 +1,3 @@
-const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const readline = require('node:readline');
@@ -58,7 +57,7 @@ listenKeypressEvents([
     keys: ['y', 'Y', 'return'],
     callback: () => {
       console.log(consoleColors.feedback, `Deleting ${path.join(__dirname, paths[pathIndex])}`);
-      spawnSync('rm', ['-rf', paths[pathIndex]]);
+      fs.rmdirSync(paths[pathIndex], { recursive: true });
       showNextDeleteMessage();
     }
   },
