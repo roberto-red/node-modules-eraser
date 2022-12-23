@@ -45,7 +45,7 @@ const showNextDeleteMessage = () => {
   } else {
     console.log(
       consoleColors.delete,
-      `Do you want to delete ${nodePath.join(__dirname, paths[pathIndex])}?`,
+      `Do you want to delete ${nodePath.resolve(paths[pathIndex])}?`,
       consoleColors.keys,
       '[enter/y/n]'
     );
@@ -56,7 +56,7 @@ listenKeypressEvents([
   {
     keys: ['y', 'Y', 'return'],
     callback: () => {
-      console.log(consoleColors.feedback, `Deleting ${nodePath.join(__dirname, paths[pathIndex])}`);
+      console.log(consoleColors.feedback, `Deleting ${nodePath.resolve(paths[pathIndex])}`);
       fs.rmdirSync(paths[pathIndex], { recursive: true });
       showNextDeleteMessage();
     }
@@ -75,7 +75,7 @@ listenKeypressEvents([
   }
 ]);
 
-console.log(`Searching node_modules in ${nodePath.join(__dirname, currentPath)}`);
+console.log(`Searching node_modules in ${nodePath.resolve(currentPath)}`);
 
 let pathIndex = -1;
 const paths = findFolderRecursive(currentPath);
