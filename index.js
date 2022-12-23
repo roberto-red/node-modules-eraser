@@ -1,7 +1,9 @@
 const fs = require('node:fs');
 const nodePath = require('node:path');
+const process = require('node:process')
 const readline = require('node:readline');
-const currentPath = process.argv[2] || '.';
+
+const targetBaseRelPath = process.argv[2] || '.';
 
 const consoleColors = {
   delete: '\x1b[32m',
@@ -75,10 +77,10 @@ listenKeypressEvents([
   }
 ]);
 
-console.log(`Searching node_modules in ${nodePath.resolve(currentPath)}`);
+console.log(`Searching node_modules in ${nodePath.resolve(targetBaseRelPath)}`);
 
 let pathIndex = -1;
-const paths = findFolderRecursive(currentPath);
+const paths = findFolderRecursive(targetBaseRelPath);
 
 console.log(`Found ${paths.length} node_modules/ directories`);
 
