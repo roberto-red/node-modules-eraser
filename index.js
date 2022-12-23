@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const path = require('node:path');
+const nodePath = require('node:path');
 const readline = require('node:readline');
 const currentPath = process.argv[2] || '.';
 
@@ -12,7 +12,7 @@ const consoleColors = {
 const findFolderRecursive = (path, result = []) => {
   if (fs.existsSync(path)) {
     fs.readdirSync(path).forEach(file => {
-      const currentPath = (path + '/' + file).replace('//', '/');
+      const currentPath = nodePath.join(path, file);
       if (file === 'node_modules') {
         result.push(currentPath);
       } else if (fs.lstatSync(currentPath).isDirectory()) {
@@ -45,7 +45,7 @@ const showNextDeleteMessage = () => {
   } else {
     console.log(
       consoleColors.delete,
-      `Do you want to delete ${path.join(__dirname, paths[pathIndex])}?`,
+      `Do you want to delete ${nodePath.join(__dirname, paths[pathIndex])}?`,
       consoleColors.keys,
       '[enter/y/n]'
     );
@@ -56,7 +56,7 @@ listenKeypressEvents([
   {
     keys: ['y', 'Y', 'return'],
     callback: () => {
-      console.log(consoleColors.feedback, `Deleting ${path.join(__dirname, paths[pathIndex])}`);
+      console.log(consoleColors.feedback, `Deleting ${nodePath.join(__dirname, paths[pathIndex])}`);
       fs.rmdirSync(paths[pathIndex], { recursive: true });
       showNextDeleteMessage();
     }
@@ -75,7 +75,7 @@ listenKeypressEvents([
   }
 ]);
 
-console.log(`Searching node_modules in ${path.join(__dirname, currentPath)}`);
+console.log(`Searching node_modules in ${nodePath.join(__dirname, currentPath)}`);
 
 let pathIndex = -1;
 const paths = findFolderRecursive(currentPath);
